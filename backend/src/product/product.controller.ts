@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from './product.entity';
 
@@ -12,7 +12,10 @@ export class ProductController {
   }
 
   @Get()
-  async findAll(): Promise<Product[]> {
-    return this.productService.findAll();
+  async findAll(@Query('page') page = 1, @Query('limit') limit = 2) {
+    return this.productService.findAll({
+      page: Number(page),
+      limit: Number(limit),
+    });
   }
 }
