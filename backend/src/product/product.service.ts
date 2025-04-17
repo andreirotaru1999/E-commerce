@@ -18,15 +18,16 @@ export class ProductService {
   async findAll(pagination: {
     page: number;
     limit: number;
-  }): Promise<{ data: Product[] }> {
+  }): Promise<{ data: Product[]; total: number }> {
     const { page, limit } = pagination;
-    const [data] = await this.ProductRepository.findAndCount({
+    const [data, total] = await this.ProductRepository.findAndCount({
       skip: (page - 1) * limit,
       take: limit,
     });
 
     return {
       data,
+      total,
     };
   }
 }
