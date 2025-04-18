@@ -10,12 +10,24 @@ export class ProductService {
     private ProductRepository: Repository<Product>,
   ) {}
 
-  async create(data: Partial<Product>): Promise<Product> {
+  async create(data: Product): Promise<Product> {
     const entity = this.ProductRepository.create(data);
     return this.ProductRepository.save(entity);
   }
 
-  async findAll(): Promise<Product[]> {
-    return this.ProductRepository.find();
+  async findAll(pagination: {
+    page: number;
+    limit: number;
+  }): Promise<{ data: Product[]; total: number }> {
+    const { page, limit } = pagination;
+    const [data, total] = await this.ProductRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+
+    return {
+      data,
+      total,
+    };
   }
 }
