@@ -9,4 +9,4 @@ import { Product } from './product.entity';
   providers: [ProductService],
   controllers: [ProductController],
 })
-export class UsersModule {}
+export class ProductModule {}
