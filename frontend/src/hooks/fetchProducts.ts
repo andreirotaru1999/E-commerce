@@ -8,9 +8,13 @@ export const fetchProducts = async (page: number, limit: number): Promise<{
   limit: number;
   totalPages: number;
 }> => {
+  try {
   const res = await axios.get('http://localhost:5000/products', {
     params: { page, limit },
   });
-  console.log(res.data);
   return res.data;
+  } catch (error) {
+    console.error('Failed to fetch products:', error);
+    throw new Error('Could not fetch products. Please try again later.');
+  }
 };
