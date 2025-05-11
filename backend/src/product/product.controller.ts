@@ -13,7 +13,10 @@ export class ProductController {
   }
 
   @Get()
-  async findAll(@Query() pagination: PaginationDto) {
-    return this.productService.findAll(pagination);
+  async findAll(@Query('page') page = 1, @Query('limit') limit = 10) {
+    return this.productService.findAll({
+      page: Number(page),
+      limit: Number(limit),
+    });
   }
 }
