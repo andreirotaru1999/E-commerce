@@ -10,7 +10,7 @@ export class ProductService {
     private ProductRepository: Repository<Product>,
   ) {}
 
-  async create(data: Partial<Product>): Promise<Product> {
+  async create(data: Product): Promise<Product> {
     const entity = this.ProductRepository.create(data);
     return this.ProductRepository.save(entity);
   }
